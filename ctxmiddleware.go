@@ -43,12 +43,17 @@ func (ca *ContextAdapter) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	ca.Handler.ServeHTTPContext(ca.Context, rw, req)
 }
 
-// ContextMW makes a type for all middleware functions so they can be chained.
-type ContextMW func(ContextHandler) ContextHandler
+// ContextMiddleware makes a type for all middleware functions so they can be
+// chained.
+type ContextMiddleware func(ContextHandler) ContextHandler
 
-// Run chains together one or more ContextMW, with the passed in Contexthandler
-// being run at the end.
-func Run(h ContextHandler, mws ...ContextMW) ContextHandler {
+// Chain is meant to store a number of middleware that should be chained one
+// after the other.
+type Chain []ContextMiddleware
+
+// Run chains together one or more ContextMiddleware, with the passed in
+// Contexthandler being run at the end.
+func Run(h ContextHandler, mws ...ContextMiddleware) ContextHandler {
 	// Reverse the middleware so they are run in the order they're passed in
 	for i := len(mws) - 1; i >= 0; i-- {
 		h = mws[i](h)

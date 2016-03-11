@@ -31,7 +31,7 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 }
 
-func timer(l *log.Logger) mw.ContextMW {
+func timer(l *log.Logger) mw.ContextMiddleware {
 	return func(h mw.ContextHandler) mw.ContextHandler {
 		return mw.ContextHandlerFunc(func(ctx context.Context, rw http.ResponseWriter, req *http.Request) {
 			now := time.Now()
