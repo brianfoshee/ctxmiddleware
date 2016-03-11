@@ -4,7 +4,7 @@
 // I have added a middleware chaining method and an associated ContextMW type.
 //
 // The idea is that in the case of this proposal being accepted,
-// https://github.com/golang/go/issues/14660#issuecomment-193914014,
+// https://github.com/golang/go/issues/14660,
 // where the context package would be in the standard library and implemented
 // on http.Request, that these same handlers and middleware could be used after
 // a brief refactoring to remove the custom types.
